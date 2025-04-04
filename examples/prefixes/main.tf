@@ -39,9 +39,8 @@ module "network" {
 }
 
 module "prefixes" {
-  source  = "cloudnationhq/ng/azure//modules/prefixes"
-  version = "~> 1.0"
-
+  source  = "cloudnationhq/pip/azure//modules/prefixes"
+  version = "~> 3.0"
 
   resource_group = module.rg.groups.demo.name
   location       = module.rg.groups.demo.location
