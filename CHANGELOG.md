@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/CloudNationHQ/terraform-azure-ng/compare/v1.1.0...v1.1.1) (2025-04-04)
+
+
+### Bug Fixes
+
+* fix prefixes module reference in usage ([#5](https://github.com/CloudNationHQ/terraform-azure-ng/issues/5)) ([c7d3804](https://github.com/CloudNationHQ/terraform-azure-ng/commit/c7d3804542adf98cb37977fe9b7bc392ad700fae))
+
 ## [1.1.0](https://github.com/CloudNationHQ/terraform-azure-ng/compare/v1.0.0...v1.1.0) (2025-04-04)
 
 
