@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/CloudNationHQ/terraform-azure-ng/compare/v1.1.1...v1.1.2) (2025-04-14)
+
+
+### Bug Fixes
+
+* fix submodule generation from makefile ([#7](https://github.com/CloudNationHQ/terraform-azure-ng/issues/7)) ([8d96a80](https://github.com/CloudNationHQ/terraform-azure-ng/commit/8d96a8063bc938f2fa3480ce158f74adbfec1389))
+
 ## [1.1.1](https://github.com/CloudNationHQ/terraform-azure-ng/compare/v1.1.0...v1.1.1) (2025-04-04)
 
 
