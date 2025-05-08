@@ -7,6 +7,11 @@
 
 * The data structure changed, causing a recreate on existing resources.
 
+### Upgrade from v1.1.2 to v2.0.0:
+
+- Update module reference to: `version = "~> 2.0"`
+- The property and variable resource_group is renamed to resource_group_name
+
 ### Features
 
 * small refactor ([#10](https://github.com/CloudNationHQ/terraform-azure-ng/issues/10)) ([321d878](https://github.com/CloudNationHQ/terraform-azure-ng/commit/321d878e3c4764236cea7e4e7c2460845750721b))
