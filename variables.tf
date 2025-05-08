@@ -2,7 +2,7 @@ variable "config" {
   description = "Contains all nat gateway configuration"
   type = object({
     name                    = string
-    resource_group          = optional(string, null)
+    resource_group_name     = optional(string, null)
     location                = optional(string, null)
     sku_name                = optional(string, "Standard")
     idle_timeout_in_minutes = optional(number, 4)
@@ -23,7 +23,7 @@ variable "config" {
   }
 
   validation {
-    condition     = var.config.resource_group != null || var.resource_group != null
+    condition     = var.config.resource_group_name != null || var.resource_group_name != null
     error_message = "Resource group name must be provided either in the config object or as a separate variable."
   }
 }
@@ -34,7 +34,7 @@ variable "location" {
   default     = null
 }
 
-variable "resource_group" {
+variable "resource_group_name" {
   description = "default resource group to be used."
   type        = string
   default     = null
