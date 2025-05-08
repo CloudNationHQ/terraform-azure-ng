@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/CloudNationHQ/terraform-azure-ng/compare/v1.1.2...v2.0.0) (2025-05-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* The data structure changed, causing a recreate on existing resources.
+
+### Features
+
+* small refactor ([#10](https://github.com/CloudNationHQ/terraform-azure-ng/issues/10)) ([321d878](https://github.com/CloudNationHQ/terraform-azure-ng/commit/321d878e3c4764236cea7e4e7c2460845750721b))
+
 ## [1.1.2](https://github.com/CloudNationHQ/terraform-azure-ng/compare/v1.1.1...v1.1.2) (2025-04-14)
 
 
