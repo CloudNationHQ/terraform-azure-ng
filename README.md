@@ -47,7 +47,7 @@ Type:
 ```hcl
 object({
     name                    = string
-    resource_group          = optional(string, null)
+    resource_group_name     = optional(string, null)
     location                = optional(string, null)
     sku_name                = optional(string, "Standard")
     idle_timeout_in_minutes = optional(number, 4)
@@ -75,7 +75,7 @@ Type: `string`
 
 Default: `null`
 
-### <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group)
+### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
 
 Description: default resource group to be used.
 

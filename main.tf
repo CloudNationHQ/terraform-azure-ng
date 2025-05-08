@@ -2,8 +2,8 @@
 resource "azurerm_nat_gateway" "gw" {
   resource_group_name = coalesce(
     lookup(
-      var.config, "resource_group", null
-    ), var.resource_group
+      var.config, "resource_group_name", null
+    ), var.resource_group_name
   )
 
   location = coalesce(
@@ -16,8 +16,8 @@ resource "azurerm_nat_gateway" "gw" {
   idle_timeout_in_minutes = var.config.idle_timeout_in_minutes
   zones                   = var.config.zones
 
-  tags = try(
-    var.config.tags, var.tags, null
+  tags = coalesce(
+    var.config.tags, var.tags
   )
 }
 
