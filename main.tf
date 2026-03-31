@@ -23,7 +23,11 @@ resource "azurerm_nat_gateway" "gw" {
 
 # subnet association
 resource "azurerm_subnet_nat_gateway_association" "gw_as" {
-  subnet_id      = var.config.subnet_id
+  for_each = lookup(
+    var.config, "subnet_associations", {}
+  )
+
+  subnet_id      = each.value.subnet_id
   nat_gateway_id = azurerm_nat_gateway.gw.id
 }
 

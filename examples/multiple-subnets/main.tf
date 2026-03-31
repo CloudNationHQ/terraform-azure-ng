@@ -12,7 +12,7 @@ module "rg" {
   groups = {
     demo = {
       name     = module.naming.resource_group.name_unique
-      location = "germanywestcentral"
+      location = "westeurope"
     }
   }
 }
@@ -34,27 +34,26 @@ module "network" {
       sn1 = {
         address_prefixes = ["10.0.1.0/24"]
       }
+      sn2 = {
+        address_prefixes = ["10.0.2.0/24"]
+      }
+      sn3 = {
+        address_prefixes = ["10.0.3.0/24"]
+      }
     }
   }
 }
 
-module "prefixes" {
-  source  = "cloudnationhq/pip/azure//modules/prefixes"
+module "public_ip" {
+  source  = "cloudnationhq/pip/azure"
   version = "~> 3.0"
 
-  resource_group = module.rg.groups.demo.name
-  location       = module.rg.groups.demo.location
-
   configs = {
-    prefix1 = {
-      name          = "${module.naming.public_ip_prefix.name}1"
-      prefix_length = 31
-      zones         = ["1", "2", "3"]
-    }
-    prefix2 = {
-      name          = "${module.naming.public_ip_prefix.name}2"
-      prefix_length = 31
-      zones         = ["1", "2", "3"]
+    pub1 = {
+      name           = "${module.naming.public_ip.name}1"
+      location       = module.rg.groups.demo.location
+      resource_group = module.rg.groups.demo.name
+      zones          = ["1", "2", "3"]
     }
   }
 }
@@ -67,18 +66,23 @@ module "natgw" {
     name                = module.naming.nat_gateway.name
     location            = module.rg.groups.demo.location
     resource_group_name = module.rg.groups.demo.name
+    zones               = ["1"]
+
     subnet_associations = {
       sn1 = {
         subnet_id = module.network.subnets.sn1.id
       }
+      sn2 = {
+        subnet_id = module.network.subnets.sn2.id
+      }
+      sn3 = {
+        subnet_id = module.network.subnets.sn3.id
+      }
     }
 
-    public_ip_prefix_associations = {
-      prefix1 = {
-        public_ip_prefix_id = module.prefixes.configs.prefix1.id
-      }
-      prefix2 = {
-        public_ip_prefix_id = module.prefixes.configs.prefix2.id
+    public_ip_associations = {
+      pub1 = {
+        public_ip_address_id = module.public_ip.configs.pub1.id
       }
     }
   }
