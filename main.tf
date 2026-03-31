@@ -24,7 +24,7 @@ resource "azurerm_nat_gateway" "gw" {
 # subnet association
 resource "azurerm_subnet_nat_gateway_association" "gw_as" {
   for_each = lookup(
-    var.config, "subnet_associations", {}
+    lookup(var.config, "associations", {}), "subnets", {}
   )
 
   subnet_id      = each.value.subnet_id
@@ -34,7 +34,7 @@ resource "azurerm_subnet_nat_gateway_association" "gw_as" {
 # public ip association
 resource "azurerm_nat_gateway_public_ip_association" "pip_as" {
   for_each = lookup(
-    var.config, "public_ip_associations", {}
+    lookup(var.config, "associations", {}), "public_ips", {}
   )
 
   nat_gateway_id       = azurerm_nat_gateway.gw.id
@@ -44,7 +44,7 @@ resource "azurerm_nat_gateway_public_ip_association" "pip_as" {
 # public ip prefix association
 resource "azurerm_nat_gateway_public_ip_prefix_association" "pippf_as" {
   for_each = lookup(
-    var.config, "public_ip_prefix_associations", {}
+    lookup(var.config, "associations", {}), "public_ip_prefixes", {}
   )
 
   nat_gateway_id      = azurerm_nat_gateway.gw.id

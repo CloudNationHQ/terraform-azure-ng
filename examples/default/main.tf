@@ -69,18 +69,19 @@ module "natgw" {
     resource_group_name = module.rg.groups.demo.name
     zones = ["1"]
 
-    subnet_associations = {
-      sn1 = {
-        subnet_id = module.network.subnets.sn1.id
+    associations = {
+      subnets = {
+        sn1 = {
+          subnet_id = module.network.subnets.sn1.id
+        }
       }
-    }
-
-    public_ip_associations = {
-      pub1 = {
-        public_ip_address_id = module.public_ip.configs.pub1.id
-      }
-      pub2 = {
-        public_ip_address_id = module.public_ip.configs.pub2.id
+      public_ips = {
+        pub1 = {
+          public_ip_address_id = module.public_ip.configs.pub1.id
+        }
+        pub2 = {
+          public_ip_address_id = module.public_ip.configs.pub2.id
+        }
       }
     }
   }
