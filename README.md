@@ -52,16 +52,18 @@ object({
     sku_name                = optional(string, "Standard")
     idle_timeout_in_minutes = optional(number, 4)
     zones                   = optional(list(string), [])
-    subnet_associations = optional(map(object({
-      subnet_id = string
-    })), {})
     tags = optional(map(string))
-    public_ip_associations = optional(map(object({
-      public_ip_address_id = string
-    })), {})
-    public_ip_prefix_associations = optional(map(object({
-      public_ip_prefix_id = string
-    })), {})
+    associations = optional(object({
+      subnets = optional(map(object({
+        subnet_id = string
+      })), {})
+      public_ips = optional(map(object({
+        public_ip_address_id = string
+      })), {})
+      public_ip_prefixes = optional(map(object({
+        public_ip_prefix_id = string
+      })), {})
+    }), {})
   })
 ```
 
