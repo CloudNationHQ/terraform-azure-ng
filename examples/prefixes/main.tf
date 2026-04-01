@@ -61,20 +61,25 @@ module "prefixes" {
 
 module "natgw" {
   source  = "cloudnationhq/ng/azure"
-  version = "~> 2.0"
+  version = "~> 3.0"
 
   config = {
     name                = module.naming.nat_gateway.name
     location            = module.rg.groups.demo.location
     resource_group_name = module.rg.groups.demo.name
-    subnet_id           = module.network.subnets.sn1.id
-
-    public_ip_prefix_associations = {
-      prefix1 = {
-        public_ip_prefix_id = module.prefixes.configs.prefix1.id
+    associations = {
+      subnets = {
+        sn1 = {
+          subnet_id = module.network.subnets.sn1.id
+        }
       }
-      prefix2 = {
-        public_ip_prefix_id = module.prefixes.configs.prefix2.id
+      public_ip_prefixes = {
+        prefix1 = {
+          public_ip_prefix_id = module.prefixes.configs.prefix1.id
+        }
+        prefix2 = {
+          public_ip_prefix_id = module.prefixes.configs.prefix2.id
+        }
       }
     }
   }
