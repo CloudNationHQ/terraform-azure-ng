@@ -7,7 +7,7 @@ variable "config" {
     sku_name                = optional(string, "Standard")
     idle_timeout_in_minutes = optional(number, 4)
     zones                   = optional(list(string), [])
-    tags = optional(map(string))
+    tags                    = optional(map(string))
     associations = optional(object({
       subnets = optional(map(object({
         subnet_id = string

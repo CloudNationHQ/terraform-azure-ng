@@ -67,7 +67,7 @@ module "natgw" {
     name                = module.naming.nat_gateway.name
     location            = module.rg.groups.demo.location
     resource_group_name = module.rg.groups.demo.name
-    zones = ["1"]
+    zones               = ["1"]
 
     associations = {
       subnets = {
