@@ -34,6 +34,12 @@ module "network" {
       sn1 = {
         address_prefixes = ["10.0.1.0/24"]
       }
+      sn2 = {
+        address_prefixes = ["10.0.2.0/24"]
+      }
+      sn3 = {
+        address_prefixes = ["10.0.3.0/24"]
+      }
     }
   }
 }
@@ -45,13 +51,6 @@ module "public_ip" {
   configs = {
     pub1 = {
       name           = "${module.naming.public_ip.name}1"
-      location       = module.rg.groups.demo.location
-      resource_group = module.rg.groups.demo.name
-      zones          = ["1", "2", "3"]
-    }
-
-    pub2 = {
-      name           = "${module.naming.public_ip.name}2"
       location       = module.rg.groups.demo.location
       resource_group = module.rg.groups.demo.name
       zones          = ["1", "2", "3"]
@@ -74,13 +73,16 @@ module "natgw" {
         sn1 = {
           subnet_id = module.network.subnets.sn1.id
         }
+        sn2 = {
+          subnet_id = module.network.subnets.sn2.id
+        }
+        sn3 = {
+          subnet_id = module.network.subnets.sn3.id
+        }
       }
       public_ips = {
         pub1 = {
           public_ip_address_id = module.public_ip.configs.pub1.id
-        }
-        pub2 = {
-          public_ip_address_id = module.public_ip.configs.pub2.id
         }
       }
     }
