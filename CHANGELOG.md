@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/CloudNationHQ/terraform-azure-ng/compare/v3.0.0...v3.1.0) (2026-04-03)
+
+
+### Features
+
+* add missing outputs ([#25](https://github.com/CloudNationHQ/terraform-azure-ng/issues/25)) ([bcc83a2](https://github.com/CloudNationHQ/terraform-azure-ng/commit/bcc83a23474f52918c3545f35be21d90df06d300))
+
 ## [3.0.0](https://github.com/CloudNationHQ/terraform-azure-ng/compare/v2.0.0...v3.0.0) (2026-04-01)
 
 
