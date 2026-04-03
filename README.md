@@ -52,7 +52,7 @@ object({
     sku_name                = optional(string, "Standard")
     idle_timeout_in_minutes = optional(number, 4)
     zones                   = optional(list(string), [])
-    tags = optional(map(string))
+    tags                    = optional(map(string))
     associations = optional(object({
       subnets = optional(map(object({
         subnet_id = string
@@ -102,6 +102,18 @@ The following outputs are exported:
 ### <a name="output_config"></a> [config](#output\_config)
 
 Description: contains all nat gateway configuration
+
+### <a name="output_public_ip_associations"></a> [public\_ip\_associations](#output\_public\_ip\_associations)
+
+Description: contains all public ip nat gateway associations
+
+### <a name="output_public_ip_prefix_associations"></a> [public\_ip\_prefix\_associations](#output\_public\_ip\_prefix\_associations)
+
+Description: contains all public ip prefix nat gateway associations
+
+### <a name="output_subnet_associations"></a> [subnet\_associations](#output\_subnet\_associations)
+
+Description: contains all subnet nat gateway associations
 <!-- END_TF_DOCS -->
 
 ## Goals
