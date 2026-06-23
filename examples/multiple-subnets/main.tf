@@ -1,6 +1,6 @@
 module "naming" {
   source  = "cloudnationhq/naming/azure"
-  version = "~> 0.22"
+  version = "~> 0.32"
 
   suffix = ["demo", "dev"]
 }
@@ -19,16 +19,16 @@ module "rg" {
 
 module "network" {
   source  = "cloudnationhq/vnet/azure"
-  version = "~> 8.0"
+  version = "~> 9.0"
 
   naming = local.naming
 
   vnet = {
-    name           = module.naming.virtual_network.name
-    location       = module.rg.groups.demo.location
-    resource_group = module.rg.groups.demo.name
-    address_space  = ["10.0.0.0/16"]
-    dns_servers    = ["8.8.8.8", "7.7.7.7"]
+    name                = module.naming.virtual_network.name
+    location            = module.rg.groups.demo.location
+    resource_group_name = module.rg.groups.demo.name
+    address_space       = ["10.0.0.0/16"]
+    dns_servers         = ["8.8.8.8", "7.7.7.7"]
 
     subnets = {
       sn1 = {
@@ -46,14 +46,14 @@ module "network" {
 
 module "public_ip" {
   source  = "cloudnationhq/pip/azure"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
   configs = {
     pub1 = {
-      name           = "${module.naming.public_ip.name}1"
-      location       = module.rg.groups.demo.location
-      resource_group = module.rg.groups.demo.name
-      zones          = ["1", "2", "3"]
+      name                = "${module.naming.public_ip.name}1"
+      location            = module.rg.groups.demo.location
+      resource_group_name = module.rg.groups.demo.name
+      zones               = ["1", "2", "3"]
     }
   }
 }
@@ -63,11 +63,11 @@ module "natgw" {
   version = "~> 4.0"
 
   config = {
-    name                    = module.naming.nat_gateway.name
-    location                = module.rg.groups.demo.location
-    resource_group_name     = module.rg.groups.demo.name
-    sku_name                = "Standard"
-    zones                   = ["1"]
+    name                = module.naming.nat_gateway.name
+    location            = module.rg.groups.demo.location
+    resource_group_name = module.rg.groups.demo.name
+    sku_name            = "Standard"
+    zones               = ["1"]
 
     associations = {
       subnets = {
