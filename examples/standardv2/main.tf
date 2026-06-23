@@ -12,7 +12,7 @@ module "rg" {
   groups = {
     demo = {
       name     = module.naming.resource_group.name_unique
-      location = "germanywestcentral"
+      location = "westeurope"
     }
   }
 }
@@ -38,23 +38,17 @@ module "network" {
   }
 }
 
-module "prefixes" {
-  source  = "cloudnationhq/pip/azure//modules/prefixes"
+module "public_ip" {
+  source  = "cloudnationhq/pip/azure"
   version = "~> 3.0"
 
-  resource_group = module.rg.groups.demo.name
-  location       = module.rg.groups.demo.location
-
   configs = {
-    prefix1 = {
-      name          = "${module.naming.public_ip_prefix.name}1"
-      prefix_length = 31
-      zones         = ["1", "2", "3"]
-    }
-    prefix2 = {
-      name          = "${module.naming.public_ip_prefix.name}2"
-      prefix_length = 31
-      zones         = ["1", "2", "3"]
+    pub1 = {
+      name           = "${module.naming.public_ip.name}1"
+      location       = module.rg.groups.demo.location
+      resource_group = module.rg.groups.demo.name
+      sku            = "StandardV2"
+      zones          = ["1", "2", "3"]
     }
   }
 }
@@ -67,18 +61,18 @@ module "natgw" {
     name                    = module.naming.nat_gateway.name
     location                = module.rg.groups.demo.location
     resource_group_name     = module.rg.groups.demo.name
+    sku_name                = "StandardV2"
+    idle_timeout_in_minutes = 4
+
     associations = {
       subnets = {
         sn1 = {
           subnet_id = module.network.subnets.sn1.id
         }
       }
-      public_ip_prefixes = {
-        prefix1 = {
-          public_ip_prefix_id = module.prefixes.configs.prefix1.id
-        }
-        prefix2 = {
-          public_ip_prefix_id = module.prefixes.configs.prefix2.id
+      public_ips = {
+        pub1 = {
+          public_ip_address_id = module.public_ip.configs.pub1.id
         }
       }
     }

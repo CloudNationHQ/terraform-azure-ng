@@ -60,13 +60,14 @@ module "public_ip" {
 
 module "natgw" {
   source  = "cloudnationhq/ng/azure"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
   config = {
-    name                = module.naming.nat_gateway.name
-    location            = module.rg.groups.demo.location
-    resource_group_name = module.rg.groups.demo.name
-    zones               = ["1"]
+    name                    = module.naming.nat_gateway.name
+    location                = module.rg.groups.demo.location
+    resource_group_name     = module.rg.groups.demo.name
+    sku_name                = "Standard"
+    zones                   = ["1"]
 
     associations = {
       subnets = {
