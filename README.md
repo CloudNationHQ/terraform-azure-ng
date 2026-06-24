@@ -29,10 +29,10 @@ The following providers are used by this module:
 
 The following resources are used by this module:
 
-- [azurerm_nat_gateway.gw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway) (resource)
-- [azurerm_nat_gateway_public_ip_association.pip_as](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway_public_ip_association) (resource)
-- [azurerm_nat_gateway_public_ip_prefix_association.pippf_as](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway_public_ip_prefix_association) (resource)
-- [azurerm_subnet_nat_gateway_association.gw_as](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_nat_gateway_association) (resource)
+- [azurerm_nat_gateway.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway) (resource)
+- [azurerm_nat_gateway_public_ip_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway_public_ip_association) (resource)
+- [azurerm_nat_gateway_public_ip_prefix_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway_public_ip_prefix_association) (resource)
+- [azurerm_subnet_nat_gateway_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_nat_gateway_association) (resource)
 
 ## Required Inputs
 
@@ -47,11 +47,11 @@ Type:
 ```hcl
 object({
     name                    = string
-    resource_group_name     = optional(string, null)
-    location                = optional(string, null)
-    sku_name                = optional(string, "Standard")
-    idle_timeout_in_minutes = optional(number, 4)
-    zones                   = optional(list(string), [])
+    resource_group_name     = optional(string)
+    location                = optional(string)
+    sku_name                = optional(string)
+    idle_timeout_in_minutes = optional(number)
+    zones                   = optional(list(string))
     tags                    = optional(map(string))
     associations = optional(object({
       subnets = optional(map(object({
