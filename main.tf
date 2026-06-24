@@ -1,8 +1,8 @@
 # nat gateway
 resource "azurerm_nat_gateway" "this" {
   name                    = var.config.name
-  resource_group_name     = coalesce(var.vault.resource_group_name, var.resource_group_name)
-  location                = coalesce(var.vault.location, var.location)
+  resource_group_name     = coalesce(var.config.resource_group_name, var.resource_group_name)
+  location                = coalesce(var.config.location, var.location)
   sku_name                = var.config.sku_name
   idle_timeout_in_minutes = var.config.idle_timeout_in_minutes
   zones                   = var.config.zones
