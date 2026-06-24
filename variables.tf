@@ -2,11 +2,11 @@ variable "config" {
   description = "Contains all nat gateway configuration"
   type = object({
     name                    = string
-    resource_group_name     = optional(string, null)
-    location                = optional(string, null)
-    sku_name                = optional(string, "Standard")
-    idle_timeout_in_minutes = optional(number, 4)
-    zones                   = optional(list(string), [])
+    resource_group_name     = optional(string)
+    location                = optional(string)
+    sku_name                = optional(string)
+    idle_timeout_in_minutes = optional(number)
+    zones                   = optional(list(string))
     tags                    = optional(map(string))
     associations = optional(object({
       subnets = optional(map(object({

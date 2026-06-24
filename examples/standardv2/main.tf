@@ -34,12 +34,6 @@ module "network" {
       sn1 = {
         address_prefixes = ["10.0.1.0/24"]
       }
-      sn2 = {
-        address_prefixes = ["10.0.2.0/24"]
-      }
-      sn3 = {
-        address_prefixes = ["10.0.3.0/24"]
-      }
     }
   }
 }
@@ -53,6 +47,7 @@ module "public_ip" {
       name                = "${module.naming.public_ip.name}1"
       location            = module.rg.groups.demo.location
       resource_group_name = module.rg.groups.demo.name
+      sku                 = "StandardV2"
       zones               = ["1", "2", "3"]
     }
   }
@@ -63,22 +58,16 @@ module "natgw" {
   version = "~> 4.0"
 
   config = {
-    name                = module.naming.nat_gateway.name
-    location            = module.rg.groups.demo.location
-    resource_group_name = module.rg.groups.demo.name
-    sku_name            = "Standard"
-    zones               = ["1"]
+    name                    = module.naming.nat_gateway.name
+    location                = module.rg.groups.demo.location
+    resource_group_name     = module.rg.groups.demo.name
+    sku_name                = "StandardV2"
+    idle_timeout_in_minutes = 4
 
     associations = {
       subnets = {
         sn1 = {
           subnet_id = module.network.subnets.sn1.id
-        }
-        sn2 = {
-          subnet_id = module.network.subnets.sn2.id
-        }
-        sn3 = {
-          subnet_id = module.network.subnets.sn3.id
         }
       }
       public_ips = {

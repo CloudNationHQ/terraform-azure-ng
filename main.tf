@@ -1,17 +1,8 @@
 # nat gateway
-resource "azurerm_nat_gateway" "gw" {
-  resource_group_name = coalesce(
-    lookup(
-      var.config, "resource_group_name", null
-    ), var.resource_group_name
-  )
-
-  location = coalesce(
-    lookup(var.config, "location", null
-    ), var.location
-  )
-
+resource "azurerm_nat_gateway" "this" {
   name                    = var.config.name
+  resource_group_name     = coalesce(var.config.resource_group_name, var.resource_group_name)
+  location                = coalesce(var.config.location, var.location)
   sku_name                = var.config.sku_name
   idle_timeout_in_minutes = var.config.idle_timeout_in_minutes
   zones                   = var.config.zones
@@ -21,32 +12,32 @@ resource "azurerm_nat_gateway" "gw" {
   )
 }
 
-# subnet association
-resource "azurerm_subnet_nat_gateway_association" "gw_as" {
+# subnet associations
+resource "azurerm_subnet_nat_gateway_association" "this" {
   for_each = lookup(
     lookup(var.config, "associations", {}), "subnets", {}
   )
 
   subnet_id      = each.value.subnet_id
-  nat_gateway_id = azurerm_nat_gateway.gw.id
+  nat_gateway_id = azurerm_nat_gateway.this.id
 }
 
-# public ip association
-resource "azurerm_nat_gateway_public_ip_association" "pip_as" {
+# public ip associations
+resource "azurerm_nat_gateway_public_ip_association" "this" {
   for_each = lookup(
     lookup(var.config, "associations", {}), "public_ips", {}
   )
 
-  nat_gateway_id       = azurerm_nat_gateway.gw.id
+  nat_gateway_id       = azurerm_nat_gateway.this.id
   public_ip_address_id = each.value.public_ip_address_id
 }
 
-# public ip prefix association
-resource "azurerm_nat_gateway_public_ip_prefix_association" "pippf_as" {
+# public ip prefix associations
+resource "azurerm_nat_gateway_public_ip_prefix_association" "this" {
   for_each = lookup(
     lookup(var.config, "associations", {}), "public_ip_prefixes", {}
   )
 
-  nat_gateway_id      = azurerm_nat_gateway.gw.id
+  nat_gateway_id      = azurerm_nat_gateway.this.id
   public_ip_prefix_id = each.value.public_ip_prefix_id
 }
