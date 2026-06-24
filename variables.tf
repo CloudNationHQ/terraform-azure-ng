@@ -23,12 +23,12 @@ variable "config" {
 
   validation {
     condition     = var.config.location != null || var.location != null
-    error_message = "Location must be provided either in the gateway object or as a separate variable."
+    error_message = "Location must be provided either in the config object or as a separate variable."
   }
 
   validation {
     condition     = var.config.resource_group_name != null || var.resource_group_name != null
-    error_message = "Resource group name must be provided either in the gateway object or as a separate variable."
+    error_message = "Resource group name must be provided either in the config object or as a separate variable."
   }
 }
 
