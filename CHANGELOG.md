@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.0](https://github.com/CloudNationHQ/terraform-azure-ng/compare/v4.0.0...v4.1.0) (2026-07-10)
+
+
+### Features
+
+* **deps:** bump golang.org/x/crypto from 0.45.0 to 0.52.0 in /tests ([#31](https://github.com/CloudNationHQ/terraform-azure-ng/issues/31)) ([b11e3e0](https://github.com/CloudNationHQ/terraform-azure-ng/commit/b11e3e0e156c6fe6941dee98055d318fac96af51))
+
 ## [4.0.0](https://github.com/CloudNationHQ/terraform-azure-ng/compare/v3.1.0...v4.0.0) (2026-06-24)
 
 
