@@ -17,28 +17,28 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.0)
 
-- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 4.0)
+- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 5.0)
 
 ## Providers
 
 The following providers are used by this module:
 
-- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (~> 4.0)
+- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (~> 5.0)
 
 ## Resources
 
 The following resources are used by this module:
 
-- [azurerm_nat_gateway.gw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway) (resource)
-- [azurerm_nat_gateway_public_ip_association.pip_as](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway_public_ip_association) (resource)
-- [azurerm_nat_gateway_public_ip_prefix_association.pippf_as](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway_public_ip_prefix_association) (resource)
-- [azurerm_subnet_nat_gateway_association.gw_as](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_nat_gateway_association) (resource)
+- [azurerm_nat_gateway.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway) (resource)
+- [azurerm_nat_gateway_public_ip_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway_public_ip_association) (resource)
+- [azurerm_nat_gateway_public_ip_prefix_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway_public_ip_prefix_association) (resource)
+- [azurerm_subnet_nat_gateway_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_nat_gateway_association) (resource)
 
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_config"></a> [config](#input\_config)
+### <a name="input_nat_gateway"></a> [nat\_gateway](#input\_nat\_gateway)
 
 Description: Contains all nat gateway configuration
 
@@ -47,10 +47,10 @@ Type:
 ```hcl
 object({
     name                    = string
-    resource_group_name     = optional(string, null)
-    location                = optional(string, null)
-    sku_name                = optional(string, "Standard")
-    idle_timeout_in_minutes = optional(number, 4)
+    resource_group_name     = optional(string)
+    location                = optional(string)
+    sku_name                = optional(string)
+    idle_timeout_in_minutes = optional(number)
     zones                   = optional(list(string), [])
     tags                    = optional(map(string))
     associations = optional(object({
@@ -99,7 +99,7 @@ Default: `{}`
 
 The following outputs are exported:
 
-### <a name="output_config"></a> [config](#output\_config)
+### <a name="output_nat_gateway"></a> [nat\_gateway](#output\_nat\_gateway)
 
 Description: contains all nat gateway configuration
 
@@ -136,11 +136,7 @@ To update the module's documentation run `make doc`
 
 We welcome contributions from the community! Whether it's reporting a bug, suggesting a new feature, or submitting a pull request, your input is highly valued.
 
-For more information, please see our contribution [guidelines](./CONTRIBUTING.md). <br><br>
-
-<a href="https://github.com/cloudnationhq/terraform-azure-ng/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=cloudnationhq/terraform-azure-ng" />
-</a>
+For more information, please see our contribution [guidelines](./CONTRIBUTING.md).
 
 ## License
 
@@ -150,4 +146,3 @@ MIT Licensed. See [LICENSE](./LICENSE) for full details.
 
 - [Documentation](https://learn.microsoft.com/en-us/azure/nat-gateway/)
 - [Rest Api](https://learn.microsoft.com/nl-nl/rest/api/virtualnetwork/nat-gateways)
-- [Rest Api Specs](https://github.com/hashicorp/pandora/tree/main/api-definitions/resource-manager/Network/2024-05-01/NatGateways)

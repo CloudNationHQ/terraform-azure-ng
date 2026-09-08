@@ -1,13 +1,13 @@
 module "naming" {
   source  = "cloudnationhq/naming/azure"
-  version = "~> 0.22"
+  version = "~> 0.32"
 
   suffix = ["demo", "dev"]
 }
 
 module "rg" {
   source  = "cloudnationhq/rg/azure"
-  version = "~> 2.0"
+  version = "~> 3.0"
 
   groups = {
     demo = {
@@ -19,16 +19,15 @@ module "rg" {
 
 module "network" {
   source  = "cloudnationhq/vnet/azure"
-  version = "~> 8.0"
+  version = "~> 10.0"
 
-  naming = local.naming
 
   vnet = {
-    name           = module.naming.virtual_network.name
-    location       = module.rg.groups.demo.location
-    resource_group = module.rg.groups.demo.name
-    address_space  = ["10.0.0.0/16"]
-    dns_servers    = ["8.8.8.8", "7.7.7.7"]
+    name                = module.naming.virtual_network.name
+    location            = module.rg.groups.demo.location
+    resource_group_name = module.rg.groups.demo.name
+    address_space       = ["10.0.0.0/16"]
+    dns_servers         = ["8.8.8.8", "7.7.7.7"]
 
     subnets = {
       sn1 = {
@@ -40,30 +39,30 @@ module "network" {
 
 module "public_ip" {
   source  = "cloudnationhq/pip/azure"
-  version = "~> 3.0"
+  version = "~> 5.0"
 
-  configs = {
+  public_ips = {
     pub1 = {
-      name           = "${module.naming.public_ip.name}1"
-      location       = module.rg.groups.demo.location
-      resource_group = module.rg.groups.demo.name
-      zones          = ["1", "2", "3"]
+      name                = "${module.naming.public_ip.name}1"
+      location            = module.rg.groups.demo.location
+      resource_group_name = module.rg.groups.demo.name
+      zones               = ["1", "2", "3"]
     }
 
     pub2 = {
-      name           = "${module.naming.public_ip.name}2"
-      location       = module.rg.groups.demo.location
-      resource_group = module.rg.groups.demo.name
-      zones          = ["1", "2", "3"]
+      name                = "${module.naming.public_ip.name}2"
+      location            = module.rg.groups.demo.location
+      resource_group_name = module.rg.groups.demo.name
+      zones               = ["1", "2", "3"]
     }
   }
 }
 
 module "natgw" {
   source  = "cloudnationhq/ng/azure"
-  version = "~> 3.0"
+  version = "~> 5.0"
 
-  config = {
+  nat_gateway = {
     name                = module.naming.nat_gateway.name
     location            = module.rg.groups.demo.location
     resource_group_name = module.rg.groups.demo.name
@@ -77,10 +76,10 @@ module "natgw" {
       }
       public_ips = {
         pub1 = {
-          public_ip_address_id = module.public_ip.configs.pub1.id
+          public_ip_address_id = module.public_ip.public_ips.pub1.id
         }
         pub2 = {
-          public_ip_address_id = module.public_ip.configs.pub2.id
+          public_ip_address_id = module.public_ip.public_ips.pub2.id
         }
       }
     }

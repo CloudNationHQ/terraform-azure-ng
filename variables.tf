@@ -1,11 +1,11 @@
-variable "config" {
+variable "nat_gateway" {
   description = "Contains all nat gateway configuration"
   type = object({
     name                    = string
-    resource_group_name     = optional(string, null)
-    location                = optional(string, null)
-    sku_name                = optional(string, "Standard")
-    idle_timeout_in_minutes = optional(number, 4)
+    resource_group_name     = optional(string)
+    location                = optional(string)
+    sku_name                = optional(string)
+    idle_timeout_in_minutes = optional(number)
     zones                   = optional(list(string), [])
     tags                    = optional(map(string))
     associations = optional(object({
@@ -22,12 +22,12 @@ variable "config" {
   })
 
   validation {
-    condition     = var.config.location != null || var.location != null
+    condition     = var.nat_gateway.location != null || var.location != null
     error_message = "Location must be provided either in the config object or as a separate variable."
   }
 
   validation {
-    condition     = var.config.resource_group_name != null || var.resource_group_name != null
+    condition     = var.nat_gateway.resource_group_name != null || var.resource_group_name != null
     error_message = "Resource group name must be provided either in the config object or as a separate variable."
   }
 }
