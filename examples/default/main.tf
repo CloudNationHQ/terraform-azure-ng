@@ -7,7 +7,7 @@ module "naming" {
 
 module "rg" {
   source  = "cloudnationhq/rg/azure"
-  version = "~> 2.0"
+  version = "~> 3.0"
 
   groups = {
     demo = {
@@ -19,9 +19,8 @@ module "rg" {
 
 module "network" {
   source  = "cloudnationhq/vnet/azure"
-  version = "~> 9.0"
+  version = "~> 10.0"
 
-  naming = local.naming
 
   vnet = {
     name                = module.naming.virtual_network.name
@@ -40,9 +39,9 @@ module "network" {
 
 module "public_ip" {
   source  = "cloudnationhq/pip/azure"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
-  configs = {
+  public_ips = {
     pub1 = {
       name                = "${module.naming.public_ip.name}1"
       location            = module.rg.groups.demo.location
@@ -61,12 +60,13 @@ module "public_ip" {
 
 module "natgw" {
   source  = "cloudnationhq/ng/azure"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
-  config = {
+  nat_gateway = {
     name                = module.naming.nat_gateway.name
     location            = module.rg.groups.demo.location
     resource_group_name = module.rg.groups.demo.name
+    zones               = ["1"]
 
     associations = {
       subnets = {
@@ -76,10 +76,10 @@ module "natgw" {
       }
       public_ips = {
         pub1 = {
-          public_ip_address_id = module.public_ip.configs.pub1.id
+          public_ip_address_id = module.public_ip.public_ips.pub1.id
         }
         pub2 = {
-          public_ip_address_id = module.public_ip.configs.pub2.id
+          public_ip_address_id = module.public_ip.public_ips.pub2.id
         }
       }
     }

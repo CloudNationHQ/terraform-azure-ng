@@ -1,42 +1,42 @@
 # nat gateway
 resource "azurerm_nat_gateway" "this" {
-  name                    = var.config.name
-  resource_group_name     = coalesce(var.config.resource_group_name, var.resource_group_name)
-  location                = coalesce(var.config.location, var.location)
-  sku_name                = var.config.sku_name
-  idle_timeout_in_minutes = var.config.idle_timeout_in_minutes
-  zones                   = var.config.zones
+  resource_group_name = coalesce(
+    var.nat_gateway.resource_group_name, var.resource_group_name
+  )
+
+  location = coalesce(
+    var.nat_gateway.location, var.location
+  )
+
+  name                    = var.nat_gateway.name
+  sku_name                = var.nat_gateway.sku_name
+  idle_timeout_in_minutes = var.nat_gateway.idle_timeout_in_minutes
+  zones                   = var.nat_gateway.zones
 
   tags = coalesce(
-    var.config.tags, var.tags
+    var.nat_gateway.tags, var.tags
   )
 }
 
-# subnet associations
+# subnet association
 resource "azurerm_subnet_nat_gateway_association" "this" {
-  for_each = lookup(
-    lookup(var.config, "associations", {}), "subnets", {}
-  )
+  for_each = var.nat_gateway.associations.subnets
 
   subnet_id      = each.value.subnet_id
   nat_gateway_id = azurerm_nat_gateway.this.id
 }
 
-# public ip associations
+# public ip association
 resource "azurerm_nat_gateway_public_ip_association" "this" {
-  for_each = lookup(
-    lookup(var.config, "associations", {}), "public_ips", {}
-  )
+  for_each = var.nat_gateway.associations.public_ips
 
   nat_gateway_id       = azurerm_nat_gateway.this.id
   public_ip_address_id = each.value.public_ip_address_id
 }
 
-# public ip prefix associations
+# public ip prefix association
 resource "azurerm_nat_gateway_public_ip_prefix_association" "this" {
-  for_each = lookup(
-    lookup(var.config, "associations", {}), "public_ip_prefixes", {}
-  )
+  for_each = var.nat_gateway.associations.public_ip_prefixes
 
   nat_gateway_id      = azurerm_nat_gateway.this.id
   public_ip_prefix_id = each.value.public_ip_prefix_id

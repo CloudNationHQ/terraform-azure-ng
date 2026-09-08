@@ -1,4 +1,4 @@
-output "config" {
+output "nat_gateway" {
   description = "contains all nat gateway configuration"
   value       = azurerm_nat_gateway.this
 }
