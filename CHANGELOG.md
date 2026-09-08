@@ -1,5 +1,18 @@
 # Changelog
 
+## [4.0.0](https://github.com/CloudNationHQ/terraform-azure-ng/compare/v3.1.0...v4.0.0) (2026-06-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* align module with v4 conventions ([#30](https://github.com/CloudNationHQ/terraform-azure-ng/issues/30))
+
+### Features
+
+* align module with v4 conventions ([#30](https://github.com/CloudNationHQ/terraform-azure-ng/issues/30)) ([1ab882c](https://github.com/CloudNationHQ/terraform-azure-ng/commit/1ab882c4d71a99d6d1a65d3e718e46d14c17c66e))
+* **deps:** bump github.com/cloudnationhq/az-cn-go-validor in /tests ([#27](https://github.com/CloudNationHQ/terraform-azure-ng/issues/27)) ([40aaeca](https://github.com/CloudNationHQ/terraform-azure-ng/commit/40aaeca3641aef1a308e09d638f1741518c146d0))
+* **deps:** bump github.com/cloudnationhq/az-cn-go-validor in /tests ([#29](https://github.com/CloudNationHQ/terraform-azure-ng/issues/29)) ([07b8752](https://github.com/CloudNationHQ/terraform-azure-ng/commit/07b87529ce00a37ffccec695a0a251366fc72e1b))
+
 ## [3.1.0](https://github.com/CloudNationHQ/terraform-azure-ng/compare/v3.0.0...v3.1.0) (2026-04-03)
 
 

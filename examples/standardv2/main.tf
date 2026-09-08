@@ -7,7 +7,7 @@ module "naming" {
 
 module "rg" {
   source  = "cloudnationhq/rg/azure"
-  version = "~> 3.0"
+  version = "~> 2.0"
 
   groups = {
     demo = {
@@ -19,8 +19,9 @@ module "rg" {
 
 module "network" {
   source  = "cloudnationhq/vnet/azure"
-  version = "~> 10.0"
+  version = "~> 9.0"
 
+  naming = local.naming
 
   vnet = {
     name                = module.naming.virtual_network.name
@@ -33,25 +34,20 @@ module "network" {
       sn1 = {
         address_prefixes = ["10.0.1.0/24"]
       }
-      sn2 = {
-        address_prefixes = ["10.0.2.0/24"]
-      }
-      sn3 = {
-        address_prefixes = ["10.0.3.0/24"]
-      }
     }
   }
 }
 
 module "public_ip" {
   source  = "cloudnationhq/pip/azure"
-  version = "~> 5.0"
+  version = "~> 4.0"
 
-  public_ips = {
+  configs = {
     pub1 = {
       name                = "${module.naming.public_ip.name}1"
       location            = module.rg.groups.demo.location
       resource_group_name = module.rg.groups.demo.name
+      sku                 = "StandardV2"
       zones               = ["1", "2", "3"]
     }
   }
@@ -59,29 +55,24 @@ module "public_ip" {
 
 module "natgw" {
   source  = "cloudnationhq/ng/azure"
-  version = "~> 5.0"
+  version = "~> 4.0"
 
-  nat_gateway = {
-    name                = module.naming.nat_gateway.name
-    location            = module.rg.groups.demo.location
-    resource_group_name = module.rg.groups.demo.name
-    zones               = ["1"]
+  config = {
+    name                    = module.naming.nat_gateway.name
+    location                = module.rg.groups.demo.location
+    resource_group_name     = module.rg.groups.demo.name
+    sku_name                = "StandardV2"
+    idle_timeout_in_minutes = 4
 
     associations = {
       subnets = {
         sn1 = {
           subnet_id = module.network.subnets.sn1.id
         }
-        sn2 = {
-          subnet_id = module.network.subnets.sn2.id
-        }
-        sn3 = {
-          subnet_id = module.network.subnets.sn3.id
-        }
       }
       public_ips = {
         pub1 = {
-          public_ip_address_id = module.public_ip.public_ips.pub1.id
+          public_ip_address_id = module.public_ip.configs.pub1.id
         }
       }
     }
